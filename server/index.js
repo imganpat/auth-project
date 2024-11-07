@@ -1,20 +1,21 @@
+import dotenv from "dotenv";
 import express, { json } from "express";
 import cors from "cors"
 import router from "./routes/user.js";
 import cookieParser from "cookie-parser";
+dotenv.config();
 
 const app = express();
 app.use(express.json())
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "https://auth-project-gc.vercel.app",
     credentials: true
-
 }))
 
 app.use(cookieParser());
 
-const port = 3000;
+const port = process.env.SERVER_PORT || 4000;
 
 app.use("/", router)
 
