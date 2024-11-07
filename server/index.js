@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json())
 
 app.use(cors({
-    origin: "https://auth-project-gc.vercel.app",
+    origin: ["https://auth-project-gc.vercel.app", "http://localhost:3000"],
     credentials: true
 }))
 
