@@ -17,7 +17,7 @@ const Login = () => {
   const handleLogin = async (email, password) => {
     const user = { email, password };
     const response = await axios.post(
-      "http://localhost:3000/api/auth/login",
+      "https://auth-project-zshv.onrender.com/api/auth/login",
       user,
       {
         withCredentials: true,

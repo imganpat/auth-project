@@ -17,7 +17,7 @@ const Register = () => {
   const handleRegister = async (username, email, password) => {
     const user = { username, email, password };
     const response = await axios.post(
-      "http://localhost:3000/api/auth/register",
+      "https://auth-project-zshv.onrender.com/api/auth/register",
       user,
       {
         withCredentials: true,

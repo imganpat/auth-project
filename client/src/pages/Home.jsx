@@ -9,9 +9,12 @@ const Home = ({ username, setUsername, email, setEmail }) => {
 
   useEffect(() => {
     const getUserData = async () => {
-      const response = await axios.get("http://localhost:3000", {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        "https://auth-project-zshv.onrender.com",
+        {
+          withCredentials: true,
+        }
+      );
       setUsername(response.data.username);
       setEmail(response.data.email);
     };
@@ -29,9 +32,12 @@ const Home = ({ username, setUsername, email, setEmail }) => {
 
   const handleLogout = async () => {
     setToken("");
-    const response = await axios.get("http://localhost:3000/api/auth/logout", {
-      withCredentials: true,
-    });
+    const response = await axios.get(
+      "https://auth-project-zshv.onrender.com/api/auth/logout",
+      {
+        withCredentials: true,
+      }
+    );
     alert(response.data.message);
   };
 
