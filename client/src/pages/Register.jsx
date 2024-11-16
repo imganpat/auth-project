@@ -16,13 +16,9 @@ const Register = () => {
 
   const handleRegister = async (username, email, password) => {
     const user = { username, email, password };
-    const response = await axios.post(
-      "https://auth-project-zshv.onrender.com/api/auth/register",
-      user,
-      {
-        withCredentials: true,
-      }
-    );
+    const response = await axios.post(`${backendUrl}/api/auth/register`, user, {
+      withCredentials: true,
+    });
     if (response.data.status !== 200) alert(response.data.message);
     else {
       alert("Register successful");

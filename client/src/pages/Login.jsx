@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import backendUrl from "../constants/backendUrl.js";
 
 const Login = () => {
   const modelRef = useRef();
@@ -16,13 +17,9 @@ const Login = () => {
 
   const handleLogin = async (email, password) => {
     const user = { email, password };
-    const response = await axios.post(
-      "https://auth-project-zshv.onrender.com/api/auth/login",
-      user,
-      {
-        withCredentials: true,
-      }
-    );
+    const response = await axios.post(`${backendUrl}/api/auth/login`, user, {
+      withCredentials: true,
+    });
     if (response.data.status !== 200) alert(response.data.message);
     else {
       alert("Login successful");

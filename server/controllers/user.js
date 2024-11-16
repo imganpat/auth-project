@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 
 const greet = async (req, res) => {
-    const token = req.cookies["vercel-feature-flags"] || req.cookies["token"];
+    const token = req.cookies["token"];
     if (!token) return;
     const { username, email } = jwt.verify(token, "Ganpat");
     res.json({ username, email });
@@ -45,6 +45,8 @@ const loginUser = async (req, res) => {
 
     res.cookie("token", token, {
         httpOnly: false,
+        sercure: true,
+        maxAge: 3600000,
     });
 
     res.json({ status: 200, message: "Login successful" })

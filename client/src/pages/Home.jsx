@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
+import backendUrl from "../constants/backendUrl.js";
 
 const Home = ({ username, setUsername, email, setEmail }) => {
   const [token, setToken] = useState(Cookies.get("token"));
@@ -9,12 +10,9 @@ const Home = ({ username, setUsername, email, setEmail }) => {
 
   useEffect(() => {
     const getUserData = async () => {
-      const response = await axios.get(
-        "https://auth-project-zshv.onrender.com",
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.get(`${backendUrl}`, {
+        withCredentials: true,
+      });
       setUsername(response.data.username);
       setEmail(response.data.email);
     };
@@ -32,12 +30,9 @@ const Home = ({ username, setUsername, email, setEmail }) => {
 
   const handleLogout = async () => {
     setToken("");
-    const response = await axios.get(
-      "https://auth-project-zshv.onrender.com/api/auth/logout",
-      {
-        withCredentials: true,
-      }
-    );
+    const response = await axios.get(`${backendUrl}/api/auth/logout`, {
+      withCredentials: true,
+    });
     alert(response.data.message);
   };
 
