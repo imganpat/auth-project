@@ -1,9 +1,10 @@
 import express from 'express';
 import userController from '../controllers/user.js';
+import authenticate from '../middlewares/auth-middleware.js';
 
 const router = express.Router();
 
-router.get("/", userController.greet)
+router.get("/", authenticate, userController.greet)
 
 router.post("/api/auth/register", userController.registerUser)
 

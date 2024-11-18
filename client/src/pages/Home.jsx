@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Cookies from "js-cookie";
 import backendUrl from "../constants/backendUrl.js";
 
 const Home = ({ username, setUsername, email, setEmail }) => {
-  const [token, setToken] = useState(Cookies.get("token"));
+  const [token, setToken] = useState(localStorage.getItem("token"));
   const navigate = useNavigate();
 
   useEffect(() => {
     const getUserData = async () => {
       const response = await axios.get(`${backendUrl}`, {
         withCredentials: true,
+        headers: {
+          Authorization: token,
+        },
       });
+
       setUsername(response.data.username);
       setEmail(response.data.email);
     };
+
     getUserData();
   }, [username, token, email]);
 
@@ -30,9 +34,12 @@ const Home = ({ username, setUsername, email, setEmail }) => {
 
   const handleLogout = async () => {
     setToken("");
+    localStorage.removeItem("token");
+
     const response = await axios.get(`${backendUrl}/api/auth/logout`, {
       withCredentials: true,
     });
+
     alert(response.data.message);
   };
 
@@ -62,7 +69,6 @@ const Home = ({ username, setUsername, email, setEmail }) => {
             </button>
           )}
         </div>
-        {/* <Login /> */}
       </div>
     </div>
   );

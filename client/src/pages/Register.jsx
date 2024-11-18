@@ -1,14 +1,15 @@
 import axios from "axios";
 import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import backendUrl from "../constants/backendUrl.js";
 
 const Register = () => {
+  const modelRef = useRef();
+  const navigate = useNavigate();
   const [email, setEmail] = useState();
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
 
-  const navigate = useNavigate();
-  const modelRef = useRef();
   const closeModel = () => {
     modelRef.current.classList.add("hidden");
     navigate("/");
@@ -16,9 +17,11 @@ const Register = () => {
 
   const handleRegister = async (username, email, password) => {
     const user = { username, email, password };
+
     const response = await axios.post(`${backendUrl}/api/auth/register`, user, {
       withCredentials: true,
     });
+
     if (response.data.status !== 200) alert(response.data.message);
     else {
       alert("Register successful");
@@ -36,14 +39,7 @@ const Register = () => {
         className="absolute h-full w-full bg-black bg-opacity-40 flex justify-center items-center"
         ref={modelRef}
       >
-        <div className="relative h-96 w-96 bg-white rounded-md flex flex-col justify-center gap-4 py-10 px-6 ">
-          <div
-            className="h-10 w-10 absolute right-4 top-4 text-white text-lg text-gray-950 flex justify-center items-center rounded-full"
-            onClick={closeModel}
-          >
-            X
-          </div>
-
+        <div className="h-96 w-96 bg-white rounded-md flex flex-col justify-center gap-4 py-10 px-6 ">
           <span className="text-3xl">Sign Up</span>
 
           <div className="flex flex-col">

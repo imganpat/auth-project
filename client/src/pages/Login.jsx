@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -7,21 +7,24 @@ import backendUrl from "../constants/backendUrl.js";
 const Login = () => {
   const modelRef = useRef();
   const navigate = useNavigate();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
   const closeModel = () => {
     modelRef.current.classList.add("hidden");
     navigate("/");
   };
 
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-
   const handleLogin = async (email, password) => {
     const user = { email, password };
+
     const response = await axios.post(`${backendUrl}/api/auth/login`, user, {
       withCredentials: true,
     });
+
     if (response.data.status !== 200) alert(response.data.message);
     else {
+      localStorage.setItem("token", response.data.token);
       alert("Login successful");
       navigate("/");
     }
@@ -37,13 +40,7 @@ const Login = () => {
         className="absolute h-full w-full bg-black bg-opacity-40 flex justify-center items-center"
         ref={modelRef}
       >
-        <div className="relative h-80 w-96 bg-white rounded-md flex flex-col justify-center gap-4 px-6 ">
-          <div
-            className="h-10 w-10 absolute right-4 top-4 text-white text-lg text-gray-950 flex justify-center items-center rounded-full"
-            onClick={closeModel}
-          >
-            X
-          </div>
+        <div className="h-80 w-96 bg-white rounded-md flex flex-col justify-center gap-4 px-6 ">
           <span className="text-3xl">Login</span>
 
           <div className="flex flex-col">
